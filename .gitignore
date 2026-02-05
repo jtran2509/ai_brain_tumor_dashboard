@@ -1,0 +1,22 @@
+# environments
+.venv/
+venv/
+
+# data
+archive/
+data/
+!data/.gitkeep
+
+# model weights
+*.pt
+*.pth
+
+# notebooks checkpoints
+.ipynb_checkpoints/
+
+# python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store

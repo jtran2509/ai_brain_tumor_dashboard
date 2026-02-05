@@ -1,0 +1,13 @@
+Python
+
+Pandas
+
+DifPy
+
+Tensorflow
+
+Scikit-learn
+
+PyTorch
+
+Resnet34
