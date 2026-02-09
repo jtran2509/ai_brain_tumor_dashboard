@@ -101,4 +101,26 @@ class EDA:
                     counts[class_type] = len(os.listdir(dir))
                 return counts
             
-            
+## Data distribution
+# Plot train counts
+eda.plot_counts('train')
+
+# Plot validation counts
+eda.plot_counts('valid')
+
+# Plot test count
+eda.plot_counts('test')
+
+# Plot samples
+eda.plot_samples()
+
+## Preprocess data
+class Config:
+    batch_size = 32
+    epochs = 50
+    lr = 1e-4
+    n_classes = len(CLASSES)
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+## Augment data
+train_transform = transform.Compose()        

@@ -2,6 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+## Define 1-layer, multi-layer 
+# Torch.nn, torchvision.models
+"""
+For loss(CrossEntropy) and Optimizer (Adam): torch.optim
+"""
 # Create a Model Class
 class Model(nn.Module):
     # Input layer
