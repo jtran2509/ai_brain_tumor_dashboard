@@ -12,7 +12,10 @@
 
 - A brain tumor is considered one of the most aggressive diseases, among children and adults. With manual examination, it can be error-prone due to the level of complexity. Hence, adding Machine Learning (ML) and Artificial intelligence (AI) has consistently shown higher accuracy than manual classification.
 
-## 2. Users and Benefits
+## 2. Project Structure
+- data_utiles.py: Contains MONAI-based preprocessing pipeline and medical image augmentation
+- models.py: Defined 1-layer, 6-layer, Resnet18 and VGG16 architectures adapted for 1-channel MRI in put
+- *exaplain.py*: Implementation of Grad-CAM for explainability 
 
 ## 3. Potential Impact
 **Time and Cost Reduction in Healthcare**: facilitates early detection of brain tumors and diagnosis, helps reduce patients' waiting time and save doctors from burn-out.
@@ -47,33 +50,29 @@ Evaluate each model on the validation set.
   
 ## Technologies Used:
 [Python](https://en.wikipedia.org/wiki/Python_(programming_language))
-
-[Pandas](https://en.wikipedia.org/wiki/PANDAS)
-
-[DifPy](https://pypi.org/project/difPy/)
-
-[Tensorflow](https://www.tensorflow.org/)
-
-[Scikit-learn](https://scikit-learn.org/stable/)
-
 [PyTorch](https://pytorch.org/)
-
-[Resnet34](https://pytorch.org/vision/main/models/generated/torchvision.models.resnet34.html)
+[Pandas](https://en.wikipedia.org/wiki/PANDAS)
+[Scikit-learn](https://scikit-learn.org/stable/)
+[Grad-CAM](https://github.com/jacobgil/pytorch-grad-cam)
+[MONAI](https://github.com/Project-MONAI/MONAI)
+[VGG16](https://keras.io/api/applications/vgg/)
+[Resnet18](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html)
 
 ## Model Accuracy Results:
-In this project, we experience 3 different models with increasing complexities to see how the accuracy is improved over time:
+In this project, we experienced 4 different models with increasing complexities to see how the accuracy is improved over time:
 - 1 layer of CNN (most basic)
-- 9 layers of CNN
-- Resnet34: a CNN architectures that is pre-trained on ImageNet Dataset containing 100,000+ images accross 200 different classes
+- 6 layers of CNN
+- Resnet18: a CNN architectures that is pre-trained on ImageNet Dataset containing 100,000+ images accross 200 different classes
+- VGG16: a simple, uniform 16-layer CNN architecture that feature over 138 million trainable parameters
 
 The table below will display various accuracy achieved by diffrent models:
 
 | Type of Tumor | Glioma | Meningioma | No tumor | Pituitary  |
 | --- | --- | --- | --- | ---| 
 | 1-layer CNN | 92% | 80% | 91% | 91% |
-| 9-layer CNN | 88% | 90% | 97% | 93% |
-| Resnet34 | 98% | 89% | 96% | 97% |
-
+| 6-layer CNN | 88% | 90% | 97% | 93% |
+| Resnet18 | 98% | 89% | 96% | 97% |
+| VGG16 | 98% | 89% | 96% | 97% |
 
 ## Usage
 - The future website/app is intended to classify MRI brain tumor into 4 clasess: no tumor, glioma, meningioma and pituitary.
@@ -86,7 +85,7 @@ To further enhance the performance and capabilities as well as practicality of t
 - Hyperparameter tuning: higher epochs don't necessary guarantee better performance, looking into playing with batch sizes, learning rates, etc. might give better performance
 
 2. Implement Transfer Learning:
-- In this project, we touch base of Transfer Learning with Resnet34. Feel free to experience with other Resnet architectures such as Resnet18, Resnet50, etc.
+- In this project, we touch base of Transfer Learning with Resnet34. Feel free to experience with other Resnet architectures such as Resnet50, VGG19, etc.
 
 
   
