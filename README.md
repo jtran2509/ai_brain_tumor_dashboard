@@ -25,9 +25,9 @@
 **Better performance Overall**:  When analyzing MRI, there must be a radiologist and a neurosurgeon on-site, hence, an automated system on Cloud can add a valuable second opinion in a timely manner
 
 ## 4. Data Source:
-- Dataset: [Brain Tumor Classification MRI](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) and [MRI Image Data](https://www.kaggle.com/datasets/alaminbhuyan/mri-image-data)
+- Dataset: [Brain Tumor Classification MRI](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) - updated recently on Feb/2026, reflected more balanced distribution in 4 types of tumors' images in the dataset
 
-- Description: These 2 datasets contain over a total of 10,000 brain MRI images which are classified into 4 classes: no tumor, glioma, meningioma, and pituitary tumor.
+- Description: This dataset contains 7,200 images of brain MRI which are classified into 4 classes: no tumor, glioma, meningioma, and pituitary tumor.
 
 # Brain Tumor Classifier Project
 
@@ -62,8 +62,7 @@ Evaluate each model on the validation set.
 In this project, we experienced 4 different models with increasing complexities to see how the accuracy is improved over time:
 - 1 layer of CNN (most basic)
 - 6 layers of CNN
-- Resnet18: a CNN architectures that is pre-trained on ImageNet Dataset containing 100,000+ images accross 200 different classes
-- VGG16: a simple, uniform 16-layer CNN architecture that feature over 138 million trainable parameters
+- DenseNet121: 
 
 The table below will display various accuracy achieved by diffrent models:
 
@@ -71,8 +70,11 @@ The table below will display various accuracy achieved by diffrent models:
 | --- | --- | --- | --- | ---| 
 | 1-layer CNN | 92% | 80% | 91% | 91% |
 | 6-layer CNN | 88% | 90% | 97% | 93% |
-| Resnet18 | 98% | 89% | 96% | 97% |
-| VGG16 | 98% | 89% | 96% | 97% |
+| DenseNet121 | 98% | 89% | 96% | 97% |
+
+| Training Set | Validation Set | Testing Set |
+| :---: | :---: | :---: |
+| ![Train](train_distribution.png) | ![Val](val_distribution.png) | ![Test](test_distribution.png) |
 
 ## Usage
 - The future website/app is intended to classify MRI brain tumor into 4 clasess: no tumor, glioma, meningioma and pituitary.
