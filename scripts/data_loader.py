@@ -14,15 +14,8 @@ from torch.utils.data.dataloader import DataLoader
 import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder
 
-# Define data paths
-def get_brain_loaders(BASE_DIR, batch_size=32):
-    # 1. define the path/base_dir
-    TRAINING_FOLDER = os.path.join(BASE_DIR, 'Training')
-    TESTING_FOLDER = os.path.join(BASE_DIR, 'Testing')
-    VAL_FOLDER = os.path.join(BASE_DIR, 'Validation')
-    CLASSES = sorted(os.listdir(TRAINING_FOLDER))
-
-    # Define transformer 
+def get_transform():
+    # Define train transformer 
     train_transform = Compose([
         lambda x: np.array(x.convert("RGB")),
         EnsureChannelFirst(channel_dim=-1),
@@ -33,13 +26,25 @@ def get_brain_loaders(BASE_DIR, batch_size=32):
         RandZoom(min_zoom=0.9, max_zoom=1.1, prob=0.5)
     ])
 
-    # Transform validation dataset
+    # Define valid transformer
     val_transformation = Compose([
         lambda x: np.array(x.convert("RGB")),
         EnsureChannelFirst(channel_dim=-1), # Moved EnsureChannelFirst before Resize
         Resize(spatial_size=(224, 224)),
         ScaleIntensity() # No use Rotation or Flip, we want to see how good our image is performing under "real" condition after learning through tons of flipping and rotating images
     ])
+    return train_transform, val_transformation
+
+# Define data paths
+def get_brain_loaders(BASE_DIR, batch_size=32):
+    # 1. define the path/base_dir
+    TRAINING_FOLDER = os.path.join(BASE_DIR, 'Training')
+    TESTING_FOLDER = os.path.join(BASE_DIR, 'Testing')
+    VAL_FOLDER = os.path.join(BASE_DIR, 'Validation')
+    CLASSES = sorted(os.listdir(TRAINING_FOLDER))
+
+    #Get the transform
+    train_transform, val_transformation = get_transform()
 
     # Create datasets
     train_dataset = ImageFolder(TRAINING_FOLDER, transform=train_transform)
