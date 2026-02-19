@@ -63,8 +63,9 @@ In this project, we experienced 2 different models with increasing complexities 
 - DenseNet121
 
 The table below will display classification report achieved by DenseNet121
+
 | Type of Tumor | Precision | Recall | F1-Score |
-| --- | --- | --- | --- | ---| 
+| --- | --- | --- | --- |
 | Glioma | 98% | 78% | 87% |
 | Meningioma| 89% | 91% | 90% |
 | No Tumor | 86% | 98% | 92% |
@@ -72,7 +73,7 @@ The table below will display classification report achieved by DenseNet121
 
 | Training Set | Validation Set | Testing Set |
 | :---: | :---: | :---: |
-| ![Train](train_distribution.png) | ![Val](val_distribution.png) | ![Test](test_distribution.png) |
+| ![Train](data\training_distribution.png) | ![Val](data\valid_distribution.png) | ![Test](data\test_distribution.png) |
 
 ## Usage
 - The future website/app is intended to classify MRI brain tumor into 4 clasess: no tumor, glioma, meningioma and pituitary.
