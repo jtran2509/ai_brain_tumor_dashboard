@@ -31,25 +31,21 @@
 # Brain Tumor Classifier Project
 
 ## Overview
-This project aims to create and fine-tune different Convolutional Neural Network (CNN) using PyTorch, to find out which one performs the best. 
+- This project aims to create and fine-tune different Convolutional Neural Network (CNN) using PyTorch, to find out which one performs the best. 
+
+- Splitting training dataset into training and validation with ratio of 9:1 
+
+| Training Set | Validation Set | Testing Set |
+| :---: | :---: | :---: |
+| ![Train](data\training_distribution.png) | ![Val](data\valid_distribution.png) | ![Test](data\test_distribution.png) |
 
 ## How to Run:
-- Make sure you have PyTorch and necessary libraries installed. 
+- Make sure you have PyTorch, Grad-CAM, MONAI libraries downloaded and other dependencies ready!
 
 - Follow the steps outlined in the notebook, from data loading to model evaluation. After the first few tries, feel free to experiment different parameters. 
 
-## Key Components:
-1. Data Loading and Preprocessing: 
-During image processing, we'll resize and shuffle the dataset before training. Besides, we'll also experiment with data augmentation to strengthen the performance.
-2. CNN model Architecture: 6-layer and DenseNet121
-3. Training:
-Splitting training dataset into training and validation with ratio of 9:1 
-
-4. Evaluation
-Evaluate each model on the test set with the purpose of seeing the difference in custom CNN model and complex, transfer leaning one, 
-  
 ## Tech Stacks
-- Deep Learning Framwork: [PyTorch](https://pytorch.org/), Torchvision
+- Deep Learning Framwork: [PyTorch](https://pytorch.org/), [Torchvision](https://docs.pytorch.org/vision/main/index.html)
 - Medical Imaging: [MONAI](https://github.com/Project-MONAI/MONAI)
 - Model Architectures: [DenseNet121](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.densenet121.html)
 - Exaplanable AI (XAI): [Grad-CAM](https://github.com/jacobgil/pytorch-grad-cam)
@@ -59,11 +55,19 @@ Evaluate each model on the test set with the purpose of seeing the difference in
 
 ## Model Accuracy Results:
 In this project, we experienced 2 different models with increasing complexities to see how the accuracy is improved over time:
-- 6 layers of CNN
-- DenseNet121
+1. 6 layers of CNN
+| Type of Tumor | Precision | Recall | F1-Score |
+| --- | --- | --- | --- |
+| Glioma | 97% | 75% | 85% |
+| Meningioma| 87% | 95% | 90% |
+| No Tumor | 88% | 100% | 94% |
+| Pituitary | 97% | 98% | 98% |
+**Evaluation**: 
+- This 6-layered model is doing excellent in identifying no tumor with **100% score of recall**, which means that the model has been overfitting and learning a little too well.
+It has **lower precision - 88%**, which means that it sometimes misclassifies other classes as no tumor - which is the error that we want to minimize mostly since identifying a sick patient with tumor as healthy is ultimately dangerous!
+- On the other hand, it's also missing out on roughly 25% of the image in glioma class. This is also a critical area for improvement since misclassifying glioma - either as `no tumor` or other types of tumor, may lead to significant consequences.
 
-The table below will display classification report achieved by DenseNet121
-
+2. DenseNet121
 | Type of Tumor | Precision | Recall | F1-Score |
 | --- | --- | --- | --- |
 | Glioma | 98% | 78% | 87% |
@@ -71,9 +75,14 @@ The table below will display classification report achieved by DenseNet121
 | No Tumor | 86% | 98% | 92% |
 | Pituitary | 95% | 98% | 96% |
 
-| Training Set | Validation Set | Testing Set |
-| :---: | :---: | :---: |
-| ![Train](data\training_distribution.png) | ![Val](data\valid_distribution.png) | ![Test](data\test_distribution.png) |
+ **Evaluation**:
+- Glioma: The model shows high precision (0.98), meaning when it predicts 'glioma', it's usually correct. However, its recall (0.78) is a bit lower, indicating it missed identifying some actual 'glioma' cases.
+- Meningioma: The model performs well with 0.89 precision and 0.91 recall.
+- No Tumor: This class has really good recall (0.98), meaning most 'no tumor' cases are correctly identified, but slightly lower precision (0.86), indicating it sometimes misclassifies other tumor types as 'no tumor'. The F1-score is 0.92.
+- Pituitary: The model performs very well on this class, with high precision (0.95) and recall (0.98).
+  
+Overall, both models achieved an accuracy on the test set with 92%. While the 6-layered model demonstrate "specialist" behaviour in overfitting on healthy scans, it might potentially misclassifies actual tumors - very risky in real-life situations, the DenseNet121 model is generalizing better between 4 types of tumors instead of specializing in only 1 type.
+
 
 ## Usage
 - The future website/app is intended to classify MRI brain tumor into 4 clasess: no tumor, glioma, meningioma and pituitary.

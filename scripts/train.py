@@ -1,5 +1,5 @@
 from data_loader import get_brain_loaders # import function from data_loader.py
-from models import get_model # Import model from models.py
+from models import get_model, CNN6layer # Import 2 models from models.py
 import torch
 import numpy as np
 import pandas as pd
@@ -277,19 +277,26 @@ class BrainTumorClassifier:
             return avg_acc, avg_loss
 
 # 4. Let's connect everything and run the model!
+
 if __name__=="__main__":
     # 1. Load data
     train_loader, val_loader, test_loader, classes = get_brain_loaders(
         "D:\ai_brain_tumor_dashboard\data", batch_size=Config.batch_size)
     # 2. Init model from model.py
     model = get_model(num_classes=4, device=Config.device)
+    model_6 = CNN6layer(num_classes=4, device=Config.device)
     # 3. Define loss and Optimizer
     loss_function = torch.nn.CrossEntropyLoss() # Calculate how far off the models' prediction from the real answer
     optimizer = torch.optim.Adam(model.parameters(), lr = Config.lr)
+    optimizer_6 = torch.optim.Adam(model_6.parameters())
+
     # 4. Initialize the model
     trainer = BrainTumorClassifier(model=model, optimizer=optimizer,
-                                criterion = loss_function,
+                                criterion = loss_function, val_transformations=val_loader.dataset.transform,
                                 train_dataset=train_loader.dataset, config=Config, output_folder="../models/densenet_v1/")
+    trainer_6= BrainTumorClassifier(model=model_6, optimizer=optimizer_6,
+                                criterion = loss_function, val_transformations=val_loader.dataset.transform,
+                                train_dataset=train_loader.dataset, config=Config, output_folder="../models/6_layer/")
 
     # Run the model & START TRAINING!
     trainer.train(
@@ -298,6 +305,13 @@ if __name__=="__main__":
     num_epochs = Config.epochs,
     output_filename = "best_model.pth"
 )
+    trainer_6.train(
+    training_loader = train_loader,
+    eval_loader = val_loader,
+    num_epochs = Config.epochs,
+    output_filename = "6_layer_model.pth"
+)
+    
 
 
 
