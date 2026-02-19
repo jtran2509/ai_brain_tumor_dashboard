@@ -42,35 +42,34 @@ This project aims to create and fine-tune different Convolutional Neural Network
 ## Key Components:
 1. Data Loading and Preprocessing: 
 During image processing, we'll resize and shuffle the dataset before training. Besides, we'll also experiment with data augmentation to strengthen the performance.
-2. CNN model Architecture:
+2. CNN model Architecture: 6-layer and DenseNet121
 3. Training:
-Splitting training and testing dataset at 9:1 ratio and run through different number of epochs to test the efficiency.
+Splitting training dataset into training and validation with ratio of 9:1 
+
 4. Evaluation
-Evaluate each model on the validation set. 
+Evaluate each model on the test set with the purpose of seeing the difference in custom CNN model and complex, transfer leaning one, 
   
-## Technologies Used:
-[Python](https://en.wikipedia.org/wiki/Python_(programming_language))
-[PyTorch](https://pytorch.org/)
-[Pandas](https://en.wikipedia.org/wiki/PANDAS)
-[Scikit-learn](https://scikit-learn.org/stable/)
-[Grad-CAM](https://github.com/jacobgil/pytorch-grad-cam)
-[MONAI](https://github.com/Project-MONAI/MONAI)
-[VGG16](https://keras.io/api/applications/vgg/)
-[Resnet18](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet18.html)
+## Tech Stacks
+- Deep Learning Framwork: [PyTorch](https://pytorch.org/), Torchvision
+- Medical Imaging: [MONAI](https://github.com/Project-MONAI/MONAI)
+- Model Architectures: [DenseNet121](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.densenet121.html)
+- Exaplanable AI (XAI): [Grad-CAM](https://github.com/jacobgil/pytorch-grad-cam)
+- Data Processing: [Pandas](https://en.wikipedia.org/wiki/PANDAS), [Scikit-learn](https://scikit-learn.org/stable/), [Numpy](https://numpy.org/)
+- Visualization & Dashboard: [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/), [Streamlit](https://streamlit.io/)
+
 
 ## Model Accuracy Results:
-In this project, we experienced 4 different models with increasing complexities to see how the accuracy is improved over time:
-- 1 layer of CNN (most basic)
+In this project, we experienced 2 different models with increasing complexities to see how the accuracy is improved over time:
 - 6 layers of CNN
-- DenseNet121: 
+- DenseNet121
 
-The table below will display various accuracy achieved by diffrent models:
-
-| Type of Tumor | Glioma | Meningioma | No tumor | Pituitary  |
+The table below will display classification report achieved by DenseNet121
+| Type of Tumor | Precision | Recall | F1-Score |
 | --- | --- | --- | --- | ---| 
-| 1-layer CNN | 92% | 80% | 91% | 91% |
-| 6-layer CNN | 88% | 90% | 97% | 93% |
-| DenseNet121 | 98% | 89% | 96% | 97% |
+| Glioma | 98% | 78% | 87% |
+| Meningioma| 89% | 91% | 90% |
+| No Tumor | 86% | 98% | 92% |
+| Pituitary | 95% | 98% | 96% |
 
 | Training Set | Validation Set | Testing Set |
 | :---: | :---: | :---: |
@@ -87,14 +86,17 @@ To further enhance the performance and capabilities as well as practicality of t
 - Hyperparameter tuning: higher epochs don't necessary guarantee better performance, looking into playing with batch sizes, learning rates, etc. might give better performance
 
 2. Implement Transfer Learning:
-- In this project, we touch base of Transfer Learning with Resnet34. Feel free to experience with other Resnet architectures such as Resnet50, VGG19, etc.
-
+- In this project, we touch base of Transfer Learning with DenseNet121. Feel free to experience with other Resnet architectures such as Resnet50, VGG19, etc.
 
   
-## Contact
-| Contact Method | |
-| --- | --- |
-| Professional Email | dungvn1999@gmail.com |
-| LinkedIn | https://www.linkedin.com/in/dungtran99/ |
-| Project Link | [https://github.com/jtran2509/brain_tumor]() |
+## Citation
+misc{msoud_nickparvar_2026,
+	title={Brain Tumor MRI Dataset},
+	url={https://www.kaggle.com/dsv/14832123},
+	DOI={10.34740/KAGGLE/DSV/14832123},
+	publisher={Kaggle},
+	author={Msoud Nickparvar},
+	year={2026}
+}
+
 
