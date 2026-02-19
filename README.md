@@ -1,5 +1,4 @@
 # Brain Tumor Classifier
-![Brain_tumor](brain-tumor-illustrate.jpg)
 
 ## 1. Intro to the problem
 - A Brain tumor is considered as one of the aggressive diseases, among children and adults. Brain tumors account for 85 to 90 percent of all primary Central Nervous system (CNS) tumors.
