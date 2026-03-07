@@ -73,7 +73,7 @@ if uploaded_file is not None:
     result_conf = conf.item() * 100
 
     st.sidebar.metric("Diagnosis result", result_label)
-    st.sidebar.metric("Accuracy", f"{result_conf:.2f}%")
+    st.sidebar.metric("Confidence", f"{result_conf:.2f}%")
 
     # Show classification report
     st.sidebar.subheader("Detailed probabilties")
