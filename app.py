@@ -60,7 +60,11 @@ if uploaded_file is not None:
 
     with torch.no_grad(): # Stop tracking gradients to reduce memory usage and speeds up the process
         logits = model(input_tensor)
-        probs = F.softmax(logits, dim=1).cpu  # Turns raw output into readable probabilities
+
+        if logits.dim() == 1:
+            logits = logits.unsqueeze(0)
+            
+        probs = F.softmax(logits, dim=1) # Turns raw output into readable probabilities
         conf, pred_idx = torch.max(probs, dim=1)
 
 # Show predictions results
