@@ -56,18 +56,21 @@
 ## Model Accuracy Results:
 In this project, we experienced 2 different models with increasing complexities to see how the accuracy is improved over time:
 1. 6 layers of CNN
+
 | Type of Tumor | Precision | Recall | F1-Score |
 | --- | --- | --- | --- |
 | Glioma | 97% | 75% | 85% |
 | Meningioma| 87% | 95% | 90% |
 | No Tumor | 88% | 100% | 94% |
 | Pituitary | 97% | 98% | 98% |
+
 **Evaluation**: 
 - This 6-layered model is doing excellent in identifying no tumor with **100% score of recall**, which means that the model has been overfitting and learning a little too well.
 It has **lower precision - 88%**, which means that it sometimes misclassifies other classes as no tumor - which is the error that we want to minimize mostly since identifying a sick patient with tumor as healthy is ultimately dangerous!
 - On the other hand, it's also missing out on roughly 25% of the image in glioma class. This is also a critical area for improvement since misclassifying glioma - either as `no tumor` or other types of tumor, may lead to significant consequences.
 
 2. DenseNet121
+
 | Type of Tumor | Precision | Recall | F1-Score |
 | --- | --- | --- | --- |
 | Glioma | 98% | 78% | 87% |

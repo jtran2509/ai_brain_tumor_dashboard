@@ -1,0 +1,32 @@
+name: Brain Tumor Project CI
+
+# 1. When pull or push into main branch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # Run on Linux
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 # Get code
+
+      - name: Set up Python
+        uses: actions/setup-python@v4 # Prepare the environment with Python
+        with:
+          python-version: '3.14'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+        
+      - name: Test Model Loading
+        run: |
+          python -c "from models import CNN6layer; print("Model 6-layer CNN loaded successfully!")"
+
+

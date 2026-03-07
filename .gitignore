@@ -7,9 +7,6 @@ archive/
 data/
 !data/.gitkeep
 
-# model weights
-*.pt
-*.pth
 
 # notebooks checkpoints
 .ipynb_checkpoints/
