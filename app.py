@@ -63,7 +63,7 @@ if uploaded_file is not None:
 
         if logits.dim() == 1:
             logits = logits.unsqueeze(0)
-            
+
         probs = F.softmax(logits, dim=1) # Turns raw output into readable probabilities
         conf, pred_idx = torch.max(probs, dim=1)
 
@@ -87,7 +87,7 @@ if uploaded_file is not None:
                 img_array = np.array(image.resize((224, 224))).astype(np.float32) / 255.0
 
                 cam_image = generate_gradcam(model, input_tensor, img_array)
-                st.image(cam_image, use_container_width=True, caption="Red area is where the model based on to make prediction")
+                st.image(cam_image, use_container_width=True, caption="Red area shows exactly where the model based on to detect the tumor.")
             except Exception as e:
                 st.error(f"Error when creating Grad-CAM: {e}")
                 st.info("Check back layer 'model.features[-2] in utils.py to make sure it fits the model you're using.")
