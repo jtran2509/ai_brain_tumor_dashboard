@@ -64,29 +64,29 @@ if uploaded_file is not None:
         conf, pred_idx = torch.max(probs, dim=1)
 
 # Show predictions results
-result_label = CLASS_NAMES[pred_idx.item()]
-result_conf = conf.item() * 100
+    result_label = CLASS_NAMES[pred_idx.item()]
+    result_conf = conf.item() * 100
 
-st.sidebar.metric("Diagnosis result", result_label)
-st.sidebar.metric("Accuracy", f"{result_conf:.2f}%")
+    st.sidebar.metric("Diagnosis result", result_label)
+    st.sidebar.metric("Accuracy", f"{result_conf:.2f}%")
 
-# Show classification report
-st.sidebar.subheader("Detailed probabilties")
-for i, name in enumerate(CLASS_NAMES):
-    st.sidebar.write(f"{name}: {probs[0][i].item()*100:.1f}%")
+    # Show classification report
+    st.sidebar.subheader("Detailed probabilties")
+    for i, name in enumerate(CLASS_NAMES):
+        st.sidebar.write(f"{name}: {probs[0][i].item()*100:.1f}%")
 
-# Run grad cam
-with col2:
-    st.header("Predict type of tumor category + Gradcam version")
-    with st.spinner("Creating heatmap"):
-        try:
-            img_array = np.array(image.resize((224, 224))).astype(np.float32) / 255.0
+    # Run grad cam
+    with col2:
+        st.header("Predict type of tumor category + Gradcam version")
+        with st.spinner("Creating heatmap"):
+            try:
+                img_array = np.array(image.resize((224, 224))).astype(np.float32) / 255.0
 
-            cam_image = generate_gradcam(model, input_tensor, img_array)
-            st.image(cam_image, use_container_width=True, caption="Red area is where the model based on to make prediction")
-        except Exception as e:
-            st.error(f"Error when creating Grad-CAM: {e}")
-            st.info("Check back layer 'model.features[-2] in utils.py to make sure it fits the model you're using.")
+                cam_image = generate_gradcam(model, input_tensor, img_array)
+                st.image(cam_image, use_container_width=True, caption="Red area is where the model based on to make prediction")
+            except Exception as e:
+                st.error(f"Error when creating Grad-CAM: {e}")
+                st.info("Check back layer 'model.features[-2] in utils.py to make sure it fits the model you're using.")
 
 # Side bar infor
 st.sidebar.markdown("---")
