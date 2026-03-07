@@ -38,7 +38,7 @@ def load_brain_model():
 st.title("Brain Tumor Classifier & Explainability")
 st.write("Project diagnosing type of brain tumor with MRI and explantion with Grad-CAM")
 
-uploaded_file = st.file_uploader("Upload an MRI image...", type=['jpg', 'png', 'jpeg'])
+uploaded_file = st.file_uploader("Upload an MRI image...", type=['jpg', 'png', 'jpeg', 'jfif'])
 
 if uploaded_file is not None:
     # Show original image
