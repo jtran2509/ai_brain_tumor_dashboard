@@ -6,9 +6,9 @@ import torch
 import torch.nn.functional as F
 
 # Import python file
-from models import get_model
-from data_loader import get_transform
-from utils import generate_gradcam
+from scripts.models import get_model
+from scripts.data_loader import get_transform
+from scripts.utils import generate_gradcam
 
 # Set config
 st.set_page_config(page_title="Brain Tumor Classifier", layout='wide')
@@ -88,6 +88,20 @@ with col2:
             st.error(f"Error when creating Grad-CAM: {e}")
             st.info("Check back layer 'model.features[-2] in utils.py to make sure it fits the model you're using.")
 
+# Side bar infor
+st.sidebar.markdown("---")
+st.sidebar.subheader("About this Project")
+st.sidebar.info("""
+**Goal:** Assist radiologists and medical professionals in classifying brain tumors from MRI scans.
+                
+**Technical Stacks**:
+- **Architecture**: DenseNet121 (MONAI)
+- **FrameWork**: PyTorch & Streamlit
+- **Explainability:** Grad-CAM (Heatmaps)
+- **Datasets**: Classified into Glioma, Meningioma, Pituitary and no Tumor.
+                
+**Note:** This is a demo for educational purposes and should not be used for actual medical diagnosis.
+""")
 
 
 
