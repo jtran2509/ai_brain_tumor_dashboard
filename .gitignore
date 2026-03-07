@@ -7,6 +7,8 @@ archive/
 data/
 !data/.gitkeep
 
+.vscode/
+__pycache__/
 
 # notebooks checkpoints
 .ipynb_checkpoints/
