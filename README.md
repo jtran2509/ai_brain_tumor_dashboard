@@ -1,56 +1,57 @@
-# Brain Tumor Classifier
+# Brain Tumor Classification with Explainable AI (Grad-CAM)
 
-## 1. Intro to the problem
-- A Brain tumor is considered as one of the aggressive diseases, among children and adults. Brain tumors account for 85 to 90 percent of all primary Central Nervous system (CNS) tumors.
+# Demo link: [Brain Tumor Classification](https://aibraintumor.streamlit.app/)
 
-- The 5-year survival rate for people with cancerous brain or CNS tumor is approximately 34% for men and 36% for women.
+## 1. IProblem Statement
+- A Brain tumor is considered as one of the aggressive diseases, among children and adults. Brain tumors account for 85 to 90 percent of all primary Central Nervous system (CNS) tumors. With manual examination, it can be error-prone due to the level of complexity. Hence, adding Machine Learning (ML) and Artificial intelligence (AI) has consistently shown higher accuracy than manual classification.
 
-- Brain tumors are classified as: Benign tumor, Malignant Tumor, Pituitary Tumor, etc. Proper treatment, planning, and accurate diagnostics should be implemented to improve the life expectanct of patients.
+- The 5-year survival rate for people with cancerous brain or CNS tumor is approximately 34% for men and 36% for women. Brain tumors are classified as: Benign tumor, Malignant Tumor, Pituitary Tumor, etc. Proper treatment, planning, and accurate diagnostics should be implemented to improve the life expectanct of patients.
 
 - The best technique to detect brain tumors is Magnetic Resonance Imaging (MRI). A huge amount of image data is generated through the scans. These images are examined by radiologists. A manual examination can be error-prone due to the level of complexities involved in brain tumors and their properties.
 
-- A brain tumor is considered one of the most aggressive diseases, among children and adults. With manual examination, it can be error-prone due to the level of complexity. Hence, adding Machine Learning (ML) and Artificial intelligence (AI) has consistently shown higher accuracy than manual classification.
-
-## 2. Project Structure
-- data_utiles.py: Contains MONAI-based preprocessing pipeline and medical image augmentation
-- models.py: Defined 1-layer, 6-layer, Resnet18 and VGG16 architectures adapted for 1-channel MRI in put
-- *exaplain.py*: Implementation of Grad-CAM for explainability 
-
-## 3. Potential Impact
-**Time and Cost Reduction in Healthcare**: facilitates early detection of brain tumors and diagnosis, helps reduce patients' waiting time and save doctors from burn-out.
-
-**Assist doctors in treatment planning**: produces sencond opinion in a time-ly manner can alert the doctors during the treatment planning process and speed uo workflow efficiency
-
-**Better performance Overall**:  When analyzing MRI, there must be a radiologist and a neurosurgeon on-site, hence, an automated system on Cloud can add a valuable second opinion in a timely manner
-
-## 4. Data Source:
-- Dataset: [Brain Tumor Classification MRI](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) - updated recently on Feb/2026, reflected more balanced distribution in 4 types of tumors' images in the dataset
-
-- Description: This dataset contains 7,200 images of brain MRI which are classified into 4 classes: no tumor, glioma, meningioma, and pituitary tumor.
-
-# Brain Tumor Classifier Project
-
-## Overview
-- This project aims to create and fine-tune different Convolutional Neural Network (CNN) using PyTorch, to find out which one performs the best. 
-
-- Splitting training dataset into training and validation with ratio of 9:1 
-
-| Training Set | Validation Set | Testing Set |
-| :---: | :---: | :---: |
-| ![Train](data\training_distribution.png) | ![Val](data\valid_distribution.png) | ![Test](data\test_distribution.png) |
-
-## How to Run:
-- Make sure you have PyTorch, Grad-CAM, MONAI libraries downloaded and other dependencies ready!
-
-- Follow the steps outlined in the notebook, from data loading to model evaluation. After the first few tries, feel free to experiment different parameters. 
-
-## Tech Stacks
+### Tech Stacks
 - Deep Learning Framwork: [PyTorch](https://pytorch.org/), [Torchvision](https://docs.pytorch.org/vision/main/index.html)
 - Medical Imaging: [MONAI](https://github.com/Project-MONAI/MONAI)
 - Model Architectures: [DenseNet121](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.densenet121.html)
 - Exaplanable AI (XAI): [Grad-CAM](https://github.com/jacobgil/pytorch-grad-cam)
 - Data Processing: [Pandas](https://en.wikipedia.org/wiki/PANDAS), [Scikit-learn](https://scikit-learn.org/stable/), [Numpy](https://numpy.org/)
 - Visualization & Dashboard: [Matplotlib](https://matplotlib.org/), [Seaborn](https://seaborn.pydata.org/), [Streamlit](https://streamlit.io/)
+
+
+### Explainable AI
+- With the use of [Grad-CAM](https://github.com/jacobgil/pytorch-grad-cam) which utilizes gradients to indicate which regions of an image that most influence the model's decision.
+
+## 2. Data Source:
+- Dataset: [Brain Tumor Classification MRI](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset) - updated recently on Feb/2026, reflected more balanced distribution in 4 types of tumors' images in the dataset
+
+- Description: This dataset contains 7,200 images of brain MRI which are classified into 4 classes: no tumor, glioma, meningioma, and pituitary tumor.
+
+
+## 3. Project Structure
+- data_utiles.py: Contains MONAI-based preprocessing pipeline and medical image augmentation
+- models.py: Defined 1-layer, 6-layer, Resnet18 and VGG16 architectures adapted for 1-channel MRI in put
+- *utils.py*: Implementation of Grad-CAM for explainability 
+- app.py: Deploy code with Streamlit app
+
+- Splitting training dataset into training and validation with ratio of 9:1 
+
+| Training Set | Validation Set | Testing Set |
+| :---: | :---: | :---: |
+| ![Train](training_distribution.png) | ![Val](valid_distribution.png) | ![Test](test_distribution.png) |
+
+
+## 4. Potential Impact
+**Time and Cost Reduction in Healthcare**: facilitates early detection of brain tumors and diagnosis, helps reduce patients' waiting time and save doctors from burn-out.
+
+**Assist doctors in treatment planning**: produces sencond opinion in a time-ly manner can alert the doctors during the treatment planning process and speed uo workflow efficiency
+
+**Better performance Overall**:  When analyzing MRI, there must be a radiologist and a neurosurgeon on-site, hence, an automated system on Cloud can add a valuable second opinion in a timely manner
+
+
+### How to Run:
+- Make sure you have PyTorch, Grad-CAM, MONAI libraries downloaded and other dependencies ready!
+
+- Follow the steps outlined in the notebook, from data loading to model evaluation. After the first few tries, feel free to experiment different parameters. 
 
 
 ## Model Accuracy Results:
