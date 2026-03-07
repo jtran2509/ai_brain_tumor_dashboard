@@ -14,7 +14,7 @@ from scripts.utils import generate_gradcam
 st.set_page_config(page_title="Brain Tumor Classifier", layout='wide')
 
 # Class names
-CLASS_NAMES = ['Glioma', "Meningioma", "No Tumor", "Pituitary"]
+CLASS_NAMES = ["Glioma", "Meningioma", "No Tumor", "Pituitary"]
 
 # load model
 @st.cache_resource
@@ -60,7 +60,7 @@ if uploaded_file is not None:
 
     with torch.no_grad(): # Stop tracking gradients to reduce memory usage and speeds up the process
         logits = model(input_tensor)
-        probs = F.softmax(logits, dim=1) # Turns raw output into readable probabilities
+        probs = F.softmax(logits, dim=1).cpu  # Turns raw output into readable probabilities
         conf, pred_idx = torch.max(probs, dim=1)
 
 # Show predictions results
