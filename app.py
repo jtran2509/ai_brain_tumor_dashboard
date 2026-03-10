@@ -24,8 +24,8 @@ def load_brain_model():
     model = get_model(num_classes=4, device=device)
 
     #Load pth file
-    root_path = pathlib.Path(__file__).parent.absolute()
-    model_path = root_path / "ml_model" / "best_model.pth"
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(BASE_DIR, "ml_model", "best_model.pth")
     
     if os.path.exists(model_path):
         model.load_state_dict(torch.load(model_path, map_location=device))
