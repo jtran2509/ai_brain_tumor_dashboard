@@ -1,6 +1,5 @@
 #Use MONAI to pre-processing and transform
 import matplotlib.pyplot as plt
-import cv2
 import seaborn as sns
 import os
 import torch
@@ -10,12 +9,12 @@ from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 from pytorch_grad_cam.utils.image import show_cam_on_image
 
-# 1. Define Config class
-class Config:
-    batch_size = 32
-    epochs = 50
-    lr = 1e-4
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+# # 1. Define Config class
+# class Config:
+#     batch_size = 32
+#     epochs = 50
+#     lr = 1e-4
+#     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def generate_gradcam(model, input_tensor, input_image, target_category=None):
   """
