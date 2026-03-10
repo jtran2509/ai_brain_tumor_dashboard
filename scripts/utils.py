@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import cv2
 import torch
 
 # Import dependencies necessary
