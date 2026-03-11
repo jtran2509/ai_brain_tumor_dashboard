@@ -1,8 +1,12 @@
 #Use MONAI to pre-processing and transform
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 import os
+import torch.nn as nn
 import torch
+import torchvision.transforms as transforms
+from PIL import Image
 
 
 # Import dependencies necessary
@@ -45,27 +49,31 @@ import torch
 
 #   return visualization
 
-import numpy as np
-import matplotlib.pyplot as plt
-from PIL import Image
-import torch
-import torchvision.transforms as transforms
+def generate_gradcam(model, input_tensor, original_image):
+    """
+    Generate Grad-CAM heatmap overlay without OpenCV.
 
-def generate_gradcam(model, image_tensor, original_image_path, target_layer):
-    """
-    Generate GradCAM overlay without OpenCV.
-    
     Args:
-        model: PyTorch model
-        image_tensor: Preprocessed image tensor (1, C, H, W)
-        original_image_path: Path to original image file
-        target_layer: The layer to hook for gradients
-    
+        model (torch.nn.Module): Trained PyTorch model (in eval mode).
+        input_tensor (torch.Tensor): Preprocessed image tensor of shape (1, C, H, W)
+                                     on the same device as the model.
+        original_image (PIL.Image): Original RGB image (any size).
+
     Returns:
-        overlay: RGB numpy array (H, W, 3) ready for st.image()
+        np.ndarray: Overlay image as RGB numpy array (H, W, 3) with values in [0, 255].
     """
-    # 1. Get heatmap from model (this part remains unchanged)
     model.eval()
+
+    # ----- Automatically find the last Conv2d layer -----
+    target_layer = None
+    for module in reversed(list(model.modules())):
+        if isinstance(module, nn.Conv2d):
+            target_layer = module
+            break
+    if target_layer is None:
+        raise ValueError("No Conv2d layer found in the model.")
+
+    # ----- Hook setup -----
     gradients = None
     activations = None
 
@@ -77,44 +85,46 @@ def generate_gradcam(model, image_tensor, original_image_path, target_layer):
         nonlocal gradients
         gradients = grad_output[0].detach()
 
-    handle_forward = target_layer.register_forward_hook(forward_hook)
-    handle_backward = target_layer.register_full_backward_hook(backward_hook)
+    forward_handle = target_layer.register_forward_hook(forward_hook)
+    backward_handle = target_layer.register_full_backward_hook(backward_hook)
 
-    # Forward pass
-    output = model(image_tensor.unsqueeze(0))
+    # ----- Forward pass (gradients enabled) -----
+    output = model(input_tensor)                # input_tensor already has batch dimension
     target_class = output.argmax(dim=1).item()
     model.zero_grad()
     output[0, target_class].backward()
 
-    handle_forward.remove()
-    handle_backward.remove()
+    # ----- Clean up hooks -----
+    forward_handle.remove()
+    backward_handle.remove()
 
-    # Pool gradients and compute heatmap
-    pooled_gradients = torch.mean(gradients, dim=[0, 2, 3])
+    # ----- Compute heatmap -----
+    # Global average pooling of gradients
+    pooled_gradients = torch.mean(gradients, dim=[0, 2, 3])  # shape: (C,)
+    # Weight activation channels
     for i in range(activations.shape[1]):
         activations[:, i, :, :] *= pooled_gradients[i]
+    # Average across channels and apply ReLU
     heatmap = torch.mean(activations, dim=1).squeeze().cpu().numpy()
-
-    # ReLU on heatmap
     heatmap = np.maximum(heatmap, 0)
-    heatmap /= heatmap.max()  # normalize to [0,1]
+    heatmap /= heatmap.max() + 1e-8  # normalize to [0,1]
 
-    # 2. Load original image with PIL
-    original_img = Image.open(original_image_path).convert('RGB')
-    original_size = original_img.size  # (width, height)
+    # ----- Prepare overlay (no OpenCV) -----
+    # Convert original PIL image to numpy array (RGB)
+    original_np = np.array(original_image.convert("RGB"))
+    orig_h, orig_w = original_np.shape[:2]
 
-    # 3. Resize heatmap to original image size
-    heatmap_resized = np.array(Image.fromarray(heatmap).resize(original_size, Image.BILINEAR))
+    # Resize heatmap to original image size
+    heatmap_resized = np.array(Image.fromarray(heatmap).resize((orig_w, orig_h), Image.BILINEAR))
 
-    # 4. Normalize and apply colormap (Matplotlib jet)
-    heatmap_normalized = (heatmap_resized - heatmap_resized.min()) / (heatmap_resized.max() - heatmap_resized.min() + 1e-8)
-    colormap = plt.cm.jet(heatmap_normalized)[:, :, :3]  # RGB in [0,1]
+    # Normalize heatmap to [0,1] again (after resize)
+    heatmap_norm = (heatmap_resized - heatmap_resized.min()) / (heatmap_resized.max() - heatmap_resized.min() + 1e-8)
+
+    # Apply jet colormap using matplotlib
+    colormap = plt.cm.jet(heatmap_norm)[:, :, :3]  # RGB in [0,1]
     heatmap_colored = (colormap * 255).astype(np.uint8)
 
-    # 5. Convert original image to numpy array
-    original_np = np.array(original_img)
-
-    # 6. Overlay: alpha blending
+    # Alpha blend
     alpha = 0.5
     overlay = (alpha * heatmap_colored + (1 - alpha) * original_np).astype(np.uint8)
 

@@ -88,9 +88,7 @@ if uploaded_file is not None:
         st.header("Predict type of tumor category + Gradcam version")
         with st.spinner("Creating heatmap"):
             try:
-                img_array = np.array(image.resize((224, 224))).astype(np.float32) / 255.0
-
-                cam_image = generate_gradcam(model, input_tensor, img_array)
+                cam_image = generate_gradcam(model, input_tensor, image)
                 st.image(cam_image, use_container_width=True, caption="Red area shows exactly where the model based on to detect the tumor.")
             except Exception as e:
                 st.error(f"Error when creating Grad-CAM: {e}")
