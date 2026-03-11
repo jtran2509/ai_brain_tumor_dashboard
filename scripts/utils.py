@@ -2,14 +2,13 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-
 import torch
 
 
 # Import dependencies necessary
-from pytorch_grad_cam import GradCAM
-from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
-from pytorch_grad_cam.utils.image import show_cam_on_image
+# from pytorch_grad_cam import GradCAM
+# from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
+# from pytorch_grad_cam.utils.image import show_cam_on_image
 
 # # 1. Define Config class
 # class Config:
