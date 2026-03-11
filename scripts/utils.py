@@ -2,7 +2,11 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-import cv2
+try: 
+  import cv2
+except ImportError:
+  import PIL.Image as Image
+  
 import torch
 
 # Import dependencies necessary
