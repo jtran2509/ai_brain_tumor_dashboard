@@ -8,7 +8,6 @@ import pathlib
 import sys
 
 # Import python file
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "scripts")))
 
 from scripts.models import get_model
 from scripts.data_loader import get_transform
