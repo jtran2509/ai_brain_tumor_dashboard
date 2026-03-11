@@ -20,7 +20,7 @@ st.set_page_config(page_title="Brain Tumor Classifier", layout='wide')
 CLASS_NAMES = ["Glioma", "Meningioma", "No Tumor", "Pituitary"]
 
 # load model
-@st.cache_resource
+@st.cache_data
 def load_brain_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = get_model(num_classes=4, device=device)
