@@ -8,7 +8,6 @@ import pathlib
 import sys
 
 # Import python file
-
 from scripts.models import get_model
 from scripts.data_loader import get_transform
 from scripts.utils import generate_gradcam
