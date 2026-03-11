@@ -2,7 +2,7 @@
 
 # Demo link: [Brain Tumor Classification](https://aibraintumor.streamlit.app/)
 
-## 1. IProblem Statement
+## 1. Problem Statement
 - A Brain tumor is considered as one of the aggressive diseases, among children and adults. Brain tumors account for 85 to 90 percent of all primary Central Nervous system (CNS) tumors. With manual examination, it can be error-prone due to the level of complexity. Hence, adding Machine Learning (ML) and Artificial intelligence (AI) has consistently shown higher accuracy than manual classification.
 
 - The 5-year survival rate for people with cancerous brain or CNS tumor is approximately 34% for men and 36% for women. Brain tumors are classified as: Benign tumor, Malignant Tumor, Pituitary Tumor, etc. Proper treatment, planning, and accurate diagnostics should be implemented to improve the life expectanct of patients.
