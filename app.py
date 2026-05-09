@@ -11,7 +11,7 @@ import pandas as pd
 # Import python file
 from scripts.models import get_model
 from scripts.data_loader import get_transform
-from scripts.utils import generate_gradcam # Vẫn giữ import này phòng khi cần
+from scripts.utils import generate_gradcam
 
 # ==================
 # PAGE CONFIG
@@ -52,7 +52,7 @@ F1_SCORE = 91
 # ==========================
 # LOAD MODEL
 # ===========================
-@st.cache_resource # Dùng cache_resource cho model (đối tượng không phải dữ liệu)
+@st.cache_resource # Use cache_resource for model
 def load_brain_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = get_model(num_classes=4, device=device)
@@ -122,7 +122,7 @@ with tab1:
                 probs = F.softmax(logits, dim=1)
                 conf, pred_idx = torch.max(probs, dim=1)
 
-            # SỬA LỖI Ở ĐÂY: CLASS_NAMES là list, không phải function
+            
             result_label = CLASS_NAMES[pred_idx.item()]
             result_conf = conf.item() * 100
 
@@ -173,6 +173,16 @@ with tab1:
             
             # Thêm disclaimer quan trọng
             st.warning("⚠️ This is an AI prediction for educational purposes only, not a medical diagnosis.")
+
+            with st.expander("🔍 Explain with Grad-CAM experimental"):
+                with st.spinner("Generating Grad-CAM heatmap..."):
+                    try:
+                        cam_image= generate_gradcam(model, input_tensor, image)
+                        st.image(cam_image, use_container_width=True,
+                                 caption="Red/Yellow areas show regions the model focused on for its prediction")
+                    except Exception as e:
+                        st.error(f"Grad-CAM generation failed: {e}")
+                        st.info("This is an experimental feature. The main prediction result shows above is unaffected.")
 
         else:
             st.markdown('<div class="insight-box">', unsafe_allow_html=True)
