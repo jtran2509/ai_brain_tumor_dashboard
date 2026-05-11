@@ -102,13 +102,60 @@ with tab1:
         )
         st.markdown('</div>', unsafe_allow_html=True)
 
+        # Pick sample images
+        with st.expander("📂 Or pick a sample image from our test set"):
+            TEST_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sample_image')
+
+            if os.path.exists(TEST_DIR):
+                tumor_types = [d for d in os.listdir(TEST_DIR) if os.path.isdir(os.path.join(TEST_DIR, d))]
+
+                if tumor_types:
+                    # Dropdown to pick a type of tumor
+                    selected_type = st.selectbox("1. Choose tumor type:", options=sorted(tumor_types))
+
+                    # Get the list of images in the selected folder
+                    type_dir = os.path.join(TEST_DIR, selected_type)
+                    images_list = [f for f in os.listdir(type_dir) if f.lower().endswith(('.jpg', '.png', '.jpeg'))]
+
+                    if images_list:
+                        def load_sample():
+                            sample_path = os.path.join(type_dir, st.session_state['selected_image_key'])
+                            image = Image.open(sample_path).convert("RGB")
+                            st.session_state['sample_image'] = image
+                            st.session_state['sample_loaded'] = True
+
+                        # Dropdown to pick a specific image
+                        selected_image = st.selectbox("2. Choose an image:", 
+                                                      options=sorted(images_list),
+                                                      key="selected_image_key", 
+                                                      on_change=load_sample)
+
+                        if not st.session_state.get('sample_loaded'):
+                            st.success(f"✅ Loaded: {selected_image} from {selected_type}")
+                    else:
+                        st.info(f"No images found in {selected_type} folder")
+                else:
+                    st.info("No tumor type found in Testing directory")
+            else:
+                st.warning(f"Testing directory not found at: {TEST_DIR}")
+
+                #===============================================
+
         if uploaded_file is not None:
             image = Image.open(uploaded_file).convert("RGB")
             st.image(image, caption="Original MRI Scan", use_container_width=True)
 
+            # Reset use sample image when there's a new upload
+            st.session_state['use_sample'] = False
+        elif st.session_state.get('sample_loaded'):
+            image = st.session_state['sample_image']
+            st.image(image, caption="Sample MRI Scan", use_container_width=True)
+        else:
+            image = None
+
     with col_result:
         st.markdown("### 🔬 Prediction Result")
-        if uploaded_file is not None:
+        if image is not None:
             # Preprocessing
             _, val_transform = get_transform()
             input_tensor = val_transform(image).unsqueeze(0)
@@ -171,7 +218,7 @@ with tab1:
             )
             st.plotly_chart(fig_probs, use_container_width=True)
             
-            # Thêm disclaimer quan trọng
+            # Addind important disclaimer
             st.warning("⚠️ This is an AI prediction for educational purposes only, not a medical diagnosis.")
 
             with st.expander("🔍 Explain with Grad-CAM experimental"):

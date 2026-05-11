@@ -30,7 +30,7 @@ from PIL import Image
 #     target_category: the index of the class you want to explain (e.g., 0 for glioma)
 #   """
 
-#   # Define the target layer
+  # Define the target layer
 #   target_layers = [model.features[-2]] # Changed target layer to the last BatchNorm2d for DenseNet121
 
 #   # 2. Initialize GradCAM
