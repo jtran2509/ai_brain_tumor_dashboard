@@ -1,7 +1,6 @@
 # Brain Tumor Classification with Explainable AI (Grad-CAM)
 
 # Demo link: [Brain Tumor Classification](https://aibraintumordashboard.streamlit.app/)
-
 ![Brain Tumor Classifier Demo](https://i.imgur.com/cb9nRQG.gif)
 
 ## 1. Problem Statement
