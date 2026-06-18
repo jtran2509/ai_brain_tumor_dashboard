@@ -1,7 +1,7 @@
 # Brain Tumor Classification with Explainable AI (Grad-CAM)
 
 # Demo link: [Brain Tumor Classification](https://aibraintumordashboard.streamlit.app/)
-![Brain Tumor Classifier Demo](https://i.imgur.com/suqfsxD.gif)
+![Brain Tumor Classifier Demo](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXFveTU3aGV1ODc1N2xoOHZ3OWRiaTVqeG9yeGFpazY1M3F6NWpmOSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/WB896lHSqAp2DlKdUH/giphy.gif)
 
 ## 1. Problem Statement
 - A Brain tumor is considered as one of the aggressive diseases, among children and adults. Brain tumors account for 85 to 90 percent of all primary Central Nervous system (CNS) tumors. With manual examination, it can be error-prone due to the level of complexity. Hence, adding Machine Learning (ML) and Artificial intelligence (AI) has consistently shown higher accuracy than manual classification.
